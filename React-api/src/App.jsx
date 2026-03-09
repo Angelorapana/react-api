@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 const apiUrl = "https://lanciweb.github.io/demo/api/actresses/"
 
@@ -14,6 +15,11 @@ function App() {
         setActresses(response.data)  //Definita la variabile con stato actresses aggiorno lo stato
 
       })
+      .catch((error) => {
+
+        console.log(error)
+
+      })
 
   }, [])
 
@@ -21,18 +27,49 @@ function App() {
     <>
       <div>
         <h1>React-Api</h1>
-      </div>
-      <div className="container">
-        <h1>Cast Attrici</h1>
-        <ul>
-          {actresses.map((singleActress) => <li key={singleActress.id}
-          >
-            <h6> {singleActress.name}</h6>
-            <img src={singleActress.image} />
-            <p>{singleActress.biography}</p>
-          </li>
-          )}
-        </ul>
+      </div><div className="container">
+        <div className="row">
+
+          {actresses.map((singleActress) => (
+
+            <div key={singleActress.id} className="col-md-4 mb-4">
+
+              <div className="card h-100">
+
+                <img
+                  src={singleActress.image}
+                  className="card-img-top"
+                  alt={singleActress.name}
+                  onError={(element) => { element.target.src = "./src/assets/placeholder.webp" }}
+                />
+
+                <div className="card-body">
+
+                  <h5 className="card-title">
+                    {singleActress.name}
+                  </h5>
+
+                  <p className="card-text">
+                    <strong>Anno:</strong> {singleActress.birth_year}
+                  </p>
+
+                  <p className="card-text">
+                    <strong>Nazionalità:</strong> {singleActress.nationality}
+                  </p>
+
+                  <p className="card-text">
+                    {singleActress.biography}
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
       </div>
     </>
   )
